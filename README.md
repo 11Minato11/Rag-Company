@@ -22,8 +22,8 @@ A professional Retrieval-Augmented Generation (RAG) system designed to help empl
 
 ### 1. Clone the Repository
 ```bash
-git clone <your-repo-url>
-cd Simple_RAG
+git clone https://github.com/11Minato11/Rag-Company.git
+cd Rag-Company
 ```
 
 ### 2. Set Up Virtual Environment
