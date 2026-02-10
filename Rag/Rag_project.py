@@ -13,9 +13,7 @@ from langchain_community.document_loaders import (
     DirectoryLoader,    # Load all files in a folder
     PyPDFLoader,        # Load PDF files
     TextLoader,         # Load plain text files
-    Docx2txtLoader,     # Load Word documents
-    CSVLoader,          # Load CSV files
-    UnstructuredExcelLoader # Load Excel files
+    Docx2txtLoader      # Load Word documents
 )
 
 # ---------------------------------
@@ -35,7 +33,7 @@ from langchain_chroma import Chroma            # Local vector database
 # ---------------------------------
 # 5. Retrieval
 # ---------------------------------
-from langchain_community.retrievers import MultiQueryRetriever
+from langchain.retrievers.multi_query import MultiQueryRetriever
 
 # 6. Generation (LLM)
 # ---------------------------------
