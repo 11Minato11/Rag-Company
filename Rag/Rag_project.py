@@ -35,9 +35,14 @@ from langchain_chroma import Chroma            # Local vector database
 # ---------------------------------
 # 5. Retrieval
 # ---------------------------------
-from langchain.retrievers.multi_query import MultiQueryRetriever
-# from langchain.retrievers import ContextualCompressionRetriever 
-# from langchain.retrievers.document_compressors import LLMChainExtractor 
+try:
+    from langchain.retrievers.multi_query import MultiQueryRetriever
+except ImportError:
+    try:
+        from langchain_community.retrievers import MultiQueryRetriever
+    except ImportError:
+        # Fallback for very specific environments
+        from langchain.retrievers import MultiQueryRetriever
 
 
 # ---------------------------------
