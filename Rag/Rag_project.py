@@ -31,9 +31,8 @@ from langchain_openai import OpenAIEmbeddings  # OpenAI's embedding model
 from langchain_chroma import Chroma            # Local vector database
 
 # ---------------------------------
-# 5. Retrieval
+# 5. Retrieval (handled by vector store directly)
 # ---------------------------------
-from langchain.retrievers.multi_query import MultiQueryRetriever
 
 # 6. Generation (LLM)
 # ---------------------------------
@@ -183,26 +182,17 @@ def construct_query(question):
 # ---------------------------------
 def get_retriever(vector_store):
     """
-    Creates a retriever with Query Translation (Multi-Query).
-    This generates multiple variations of the user's question to find better results.
+    Creates a retriever for semantic search.
+    Query optimization is handled by construct_query() before retrieval.
     """
     
-    # 1. The Base Retriever (Basic Semantic Search)
-    base_retriever = vector_store.as_retriever(
+    # Semantic Search Retriever
+    retriever = vector_store.as_retriever(
         search_type="similarity",
         search_kwargs={"k": 5} # Retrieve top 5 chunks
     )
-
-    # 2. Query Translation: Multi-Query Retriever
-    # This uses an LLM to generate 3-5 different versions of the user's question
-    llm = ChatOpenAI(temperature=0)
     
-    multi_query_retriever = MultiQueryRetriever.from_llm(
-        retriever=base_retriever, 
-        llm=llm
-    )
-    
-    return multi_query_retriever
+    return retriever
 
 # ---------------------------------
 # 5. Generation (RAG Chain)
