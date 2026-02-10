@@ -35,9 +35,9 @@ from langchain_chroma import Chroma            # Local vector database
 # ---------------------------------
 # 5. Retrieval
 # ---------------------------------
-from langchain.retrievers.contextual_compression import ContextualCompressionRetriever
-from langchain.retrievers.multi_query import MultiQueryRetriever
-from langchain.retrievers.document_compressors import LLMChainExtractor
+from langchain_community.retrievers import MultiQueryRetriever
+# from langchain.retrievers import ContextualCompressionRetriever # Uncomment if needed later
+# from langchain.retrievers.document_compressors import LLMChainExtractor # Uncomment if needed later
 
 # ---------------------------------
 # 6. Generation (LLM)
