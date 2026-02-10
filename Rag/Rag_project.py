@@ -35,17 +35,8 @@ from langchain_chroma import Chroma            # Local vector database
 # ---------------------------------
 # 5. Retrieval
 # ---------------------------------
-try:
-    from langchain.retrievers.multi_query import MultiQueryRetriever
-except ImportError:
-    try:
-        from langchain_community.retrievers import MultiQueryRetriever
-    except ImportError:
-        # Fallback for very specific environments
-        from langchain.retrievers import MultiQueryRetriever
+from langchain_community.retrievers import MultiQueryRetriever
 
-
-# ---------------------------------
 # 6. Generation (LLM)
 # ---------------------------------
 from langchain_openai import ChatOpenAI        # Chat model (GPT-3.5/4)
@@ -73,8 +64,8 @@ load_dotenv()
 # ---------------------------------
 # Configuration
 # ---------------------------------
-DATA_PATH = r"c:\Users\othma\Documents\Simple_RAG\data\sample_documents"
-CHROMA_PATH = r"chroma_db"
+DATA_PATH = os.path.join(os.getcwd(), "data", "sample_documents")
+CHROMA_PATH = os.path.join(os.getcwd(), "chroma_db")
 
 # ---------------------------------
 # 1. Load Documents
