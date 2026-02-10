@@ -18,6 +18,38 @@ from Rag.Rag_project import (
 # Set Page Config
 st.set_page_config(page_title="Company Brain RAG", page_icon="🤖", layout="wide")
 
+# ---------------------------------
+# Password Protection
+# ---------------------------------
+def check_password():
+    """Returns True if the user entered the correct password."""
+    if "authenticated" not in st.session_state:
+        st.session_state.authenticated = False
+
+    if st.session_state.authenticated:
+        return True
+
+    # Show login form
+    st.title("🔒 Company Private Data Assistant")
+    st.markdown("Please enter the password to access the assistant.")
+    
+    password = st.text_input("Password", type="password")
+    
+    if st.button("Login"):
+        # Check password from Streamlit Secrets
+        correct_password = st.secrets.get("APP_PASSWORD", "admin123")
+        if password == correct_password:
+            st.session_state.authenticated = True
+            st.rerun()
+        else:
+            st.error("❌ Incorrect password. Please try again.")
+    
+    return False
+
+# Block access if not authenticated
+if not check_password():
+    st.stop()
+
 # App Header
 st.title("🤖 Company Private Data Assistant")
 st.markdown("---")
@@ -56,6 +88,10 @@ with st.sidebar:
 # Initialize RAG Components
 @st.cache_resource
 def init_rag():
+    # Load API key from Streamlit Cloud Secrets (if deployed)
+    # This bridges the gap between local .env and cloud Secrets
+    if hasattr(st, "secrets") and "OPENAI_API_KEY" in st.secrets:
+        os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
     load_dotenv()
     if not os.path.exists(CHROMA_PATH):
         # Initial setup if DB doesn't exist
